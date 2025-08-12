@@ -15,7 +15,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                     <h5 class="card-title">Data Users</h5>
                     <div class="mb-3" align="right">
                         <a href="?page=tambah-user" class="btn btn-primary">
-                            Tambah
+                            Tambah Users
                         </a>
                     </div>
                     <table class="table table-bordered">
