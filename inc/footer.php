@@ -1,3 +1,4 @@
+<!-- footer -->
 <div class="container-fluid footer bg-dark wow fadeIn" data-wow-delay=".3s">
     <div class="container pt-5 pb-4">
         <div class="row g-5">
@@ -54,3 +55,4 @@
         </div>
     </div>
 </div>
+<!-- end footer -->

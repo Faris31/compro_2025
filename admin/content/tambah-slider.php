@@ -95,8 +95,8 @@ if (isset($_POST['simpan'])) {
                         <div class="mb-3">
                             <label for="">Gambar</label>
                             <input type="file" name="image" class="form-control" required value="<?= ($id) ? $rowEdit['images'] : ''; ?>">
-                            <small>)* image must be landscape or 1920 x 1080</small>
-                            <!-- <img class="mt-2" src="uploads/" alt="" width="100"> -->
+                            <small>)* image must be landscape or 1920 x 1080</small> <br>
+                            <img class="mt-2 rounded-2" src="uploads/<?= isset($rowEdit['images']) ? $rowEdit['images'] : '' ?>" alt="" width="20%">
                         </div>
                         <div class="mb-3">
                             <label for="">Judul</label>

@@ -36,7 +36,7 @@ $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
                                     <td class="align-content-center text-center"><?= $row['title'] ?></td>
                                     <td class="align-content-center" style="width: 1100px; text-align: justify;"><?= $row['description'] ?></td>
                                     <td class="align-content-center text-center">
-                                        <a href="?page=tambah-slider&edit=<?= $row['id'] ?>" class="btn btn-sm mb-1 btn-success">
+                                        <a href="?page=tambah-slider&edit=<?= $row['id'] ?>" class="btn btn-sm btn-success">
                                             Edit
                                         </a>
                                         <a
