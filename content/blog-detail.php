@@ -1,15 +1,23 @@
 <?php
+$id = isset($_GET['id']) ? $_GET['id'] : '';
+$blogsDetail = mysqli_query($koneksi, "SELECT categories.name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.id_kategori WHERE blogs.id = '$id'");
+$rowBlogsDetail = mysqli_fetch_assoc($blogsDetail);
 
-
-$queryBlogs = mysqli_query($koneksi, "SELECT * FROM blogs ORDER BY id DESC");
-$rowsBlogs = mysqli_fetch_all($queryBlogs, MYSQLI_ASSOC);
-
+$recentBlogDetail = mysqli_query($koneksi, "SELECT categories.name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.id_kategori ORDER BY id DESC");
+$rowRecentBlogDetail = mysqli_fetch_all($recentBlogDetail, MYSQLI_ASSOC);
 
 ?>
+<!-- untuk membuat jam, ngambil dari created_at -->
+<?php
+$date_blog = $rowBlogs['created_at'];
+$date_blog = date("M d Y", strtotime($date_blog));
+?>
+
+
 <!-- Page Header Start -->
 <div class="container-fluid page-header py-5">
     <div class="container text-center py-5">
-        <h1 class="display-2 text-white mb-4 animated slideInDown">Our Blog</h1>
+        <h1 class="display-2 text-white mb-4 animated slideInDown"><?= $rowBlogsDetail['title'] ?></h1>
         <nav aria-label="breadcrumb animated slideInDown">
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -21,39 +29,6 @@ $rowsBlogs = mysqli_fetch_all($queryBlogs, MYSQLI_ASSOC);
 </div>
 <!-- Page Header End -->
 
-<!-- Fact Start -->
-<div class="container-fluid bg-secondary py-5">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 wow fadeIn" data-wow-delay=".1s">
-                <div class="d-flex counter">
-                    <h1 class="me-3 text-primary counter-value">99</h1>
-                    <h5 class="text-white mt-1">Success in getting happy customer</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 wow fadeIn" data-wow-delay=".3s">
-                <div class="d-flex counter">
-                    <h1 class="me-3 text-primary counter-value">25</h1>
-                    <h5 class="text-white mt-1">Thousands of successful business</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 wow fadeIn" data-wow-delay=".5s">
-                <div class="d-flex counter">
-                    <h1 class="me-3 text-primary counter-value">120</h1>
-                    <h5 class="text-white mt-1">Total clients who love HighTech</h5>
-                </div>
-            </div>
-            <div class="col-lg-3 wow fadeIn" data-wow-delay=".7s">
-                <div class="d-flex counter">
-                    <h1 class="me-3 text-primary counter-value">5</h1>
-                    <h5 class="text-white mt-1">Stars reviews given by satisfied clients</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Fact End -->
-
 <!-- Blog Start -->
 <div class="container-fluid blog py-5 mb-5">
     <div class="container">
@@ -62,14 +37,14 @@ $rowsBlogs = mysqli_fetch_all($queryBlogs, MYSQLI_ASSOC);
             <h1>Latest Blog & News</h1>
         </div>
         <div class="row g-5 justify-content-center">
-            <?php foreach ($rowsBlogs as $rowBlogs) : ?>
+            <?php foreach ($rowRecentBlogDetail as $key => $recentBlogDetail) : ?>
                 <div class="col-lg-6 col-xl-4 wow fadeIn" data-wow-delay=".3s">
-                    <div class="blog-item position-relative bg-light rounded text-center">
-                        <img src="admin/blog/<?= $rowBlogs['images'] ?>" class="img-fluid rounded-top" alt="">
+                    <div class="blog-item position-relative bg-light rounded">
+                        <img src="admin/blog/<?= $recentBlogDetail['images'] ?>" class="img-fluid rounded-top" alt="">
                         <span class="position-absolute px-4 py-3 bg-primary text-white rounded" style="top: -28px; right: 20px;"><?= $rowBlogs['title'] ?></span>
                         <div class="blog-btn d-flex justify-content-between position-relative px-3" style="margin-top: -75px;">
                             <div class="blog-icon btn btn-secondary px-3 rounded-pill my-auto">
-                                <a href="?page=blog-detail&id=<?= $rowBlogs['id'] ?>" class="btn text-white">Read More</a>
+                                <a href="" class="btn text-white">Read More</a>
                             </div>
                             <div class="blog-btn-icon btn btn-secondary px-4 py-3 rounded-pill ">
                                 <div class="blog-icon-1">

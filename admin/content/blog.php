@@ -1,5 +1,5 @@
 <?php
-$query = mysqli_query($koneksi, "SELECT  categories.name, blogs. * FROM blogs 
+$query = mysqli_query($koneksi, "SELECT  categories.name as category_name, blogs. * FROM blogs 
 JOIN categories ON categories.id = blogs.id_kategori
 ORDER BY blogs.id DESC");
 $rows = mysqli_fetch_all($query, MYSQLI_ASSOC);
@@ -42,7 +42,9 @@ function changeIsActive($isActive)
                                 <th>Gambar</th>
                                 <th>Kategories</th>
                                 <th>Judul</th>
+                                <th>Content</th>
                                 <th>Status</th>
+                                <th>Tags</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -51,10 +53,11 @@ function changeIsActive($isActive)
                                 <tr>
                                     <td class="text-center align-content-center"><?= $key += 1 ?></td>
                                     <td class="text-center"><img width="100" src="blog/<?= $row['images'] ?>" alt=""></td>
+                                    <td class="text-center align-content-center"><?= $row['category_name'] ?></td>
                                     <td class="text-center align-content-center"><?= $row['title'] ?></td>
-                                    <td class="text-center align-content-center"><?= $row['id_kategori'] ?></td>
-                                    <td class="text-center align-content-center"><?= $row['name'] ?></td>
+                                    <td class="text-center align-content-center"><?= $row['content'] ?></td>
                                     <td class="text-center align-content-center"><?= $row['is_active'] ? 'Publish' : 'Draft'; ?></td>
+                                    <td class="text-center align-content-center"><?= $row['tags'] ?></td>
                                     <td class="align-content-center text-center">
                                         <a href="?page=tambah-blog&edit=<?= $row['id'] ?>" class="btn btn-sm btn-success">
                                             Edit

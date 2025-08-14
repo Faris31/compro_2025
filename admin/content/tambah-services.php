@@ -31,6 +31,7 @@ if (isset($_GET['delete'])) {
 
 // perintah simpan
 if (isset($_POST['simpan'])) {
+    $title = $_POST['title'];
     $name = $_POST['name'];
     $is_active = $_POST['is_active'];
 
@@ -65,7 +66,8 @@ if (isset($_POST['simpan'])) {
         // ini query update
         $update = mysqli_query($koneksi, "UPDATE services SET
         
-        name = '$name', 
+        name = '$name',
+        title = '$title',
         is_active = '$is_active', 
         images = '$image_nama' WHERE id = '$id' ");
 
@@ -73,7 +75,7 @@ if (isset($_POST['simpan'])) {
             header("location:?page=services&ubah=berhasil");
         }
     } else {
-        $insert = mysqli_query($koneksi, "INSERT INTO services (name, images, is_active) VALUES('$name','$image_nama','$is_active')");
+        $insert = mysqli_query($koneksi, "INSERT INTO services (name, title, images, is_active) VALUES('$name','$title','$image_nama','$is_active')");
         if ($insert) {
             header("location:?page=services&tambah=berhasil");
         }
