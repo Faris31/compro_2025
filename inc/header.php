@@ -37,10 +37,10 @@
               </button>
               <div class="collapse navbar-collapse bg-transparent" id="navbarCollapse">
                   <div class="navbar-nav ms-auto mx-xl-auto p-0">
-                      <a href="?page=home" class="nav-item nav-link active text-secondary">Home</a>
+                      <a href="?page=home" class="nav-item nav-link text-secondary">Home</a>
                       <a href="?page=about" class="nav-item nav-link">About</a>
                       <a href="?page=services" class="nav-item nav-link">Services</a>
-                      <a href="?page=project" class="nav-item nav-link">Projects</a>
+                      <a href="?page=portofolio" class="nav-item nav-link">Portofolio</a>
                       <div class="nav-item dropdown">
                           <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                           <div class="dropdown-menu rounded">

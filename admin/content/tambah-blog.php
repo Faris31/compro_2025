@@ -84,7 +84,7 @@ if (isset($_POST['simpan'])) {
     }
 }
 
-$queryCategories = mysqli_query($koneksi, "SELECT * FROM categories ORDER BY id ='$id'");
+$queryCategories = mysqli_query($koneksi, "SELECT * FROM categories WHERE type ='blog' ORDER BY id ='$id'");
 $rowsCategories = mysqli_fetch_all($queryCategories, MYSQLI_ASSOC);
 
 // penulis di ambil dari 
@@ -131,7 +131,7 @@ $rowsCategories = mysqli_fetch_all($queryCategories, MYSQLI_ASSOC);
             </div>
             <div class="col-lg-4">
                 <div class="card">
-                    <div class="card-body"> 
+                    <div class="card-body">
                         <h5 class="card-title"><?= $title ?></h5>
                         <div class="mb-3">
                             <label for="" class="form-label">Tags</label>

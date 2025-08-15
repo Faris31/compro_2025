@@ -3,7 +3,7 @@ $id = isset($_GET['id']) ? $_GET['id'] : '';
 $blogsDetail = mysqli_query($koneksi, "SELECT categories.name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.id_kategori WHERE blogs.id = '$id'");
 $rowBlogsDetail = mysqli_fetch_assoc($blogsDetail);
 
-$recentBlogDetail = mysqli_query($koneksi, "SELECT categories.name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.id_kategori ORDER BY id DESC");
+$recentBlogDetail = mysqli_query($koneksi, "SELECT categories.name, blogs.* FROM blogs JOIN categories ON categories.id = blogs.id_kategori LIMIT 5");
 $rowRecentBlogDetail = mysqli_fetch_all($recentBlogDetail, MYSQLI_ASSOC);
 
 ?>
@@ -11,6 +11,10 @@ $rowRecentBlogDetail = mysqli_fetch_all($recentBlogDetail, MYSQLI_ASSOC);
 <?php
 $date_blog = $rowBlogs['created_at'];
 $date_blog = date("M d Y", strtotime($date_blog));
+?>
+
+<?php
+$tags = json_decode($rowBlogsDetail['tags'], true);
 ?>
 
 
@@ -36,45 +40,149 @@ $date_blog = date("M d Y", strtotime($date_blog));
             <h5 class="text-primary">Our Blog</h5>
             <h1>Latest Blog & News</h1>
         </div>
-        <div class="row g-5 justify-content-center">
-            <?php foreach ($rowRecentBlogDetail as $key => $recentBlogDetail) : ?>
-                <div class="col-lg-6 col-xl-4 wow fadeIn" data-wow-delay=".3s">
-                    <div class="blog-item position-relative bg-light rounded">
-                        <img src="admin/blog/<?= $recentBlogDetail['images'] ?>" class="img-fluid rounded-top" alt="">
-                        <span class="position-absolute px-4 py-3 bg-primary text-white rounded" style="top: -28px; right: 20px;"><?= $rowBlogs['title'] ?></span>
-                        <div class="blog-btn d-flex justify-content-between position-relative px-3" style="margin-top: -75px;">
-                            <div class="blog-icon btn btn-secondary px-3 rounded-pill my-auto">
-                                <a href="" class="btn text-white">Read More</a>
-                            </div>
-                            <div class="blog-btn-icon btn btn-secondary px-4 py-3 rounded-pill ">
-                                <div class="blog-icon-1">
-                                    <p class="text-white px-2">Share<i class="fa fa-arrow-right ms-3"></i></p>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    <!-- Blog Details Section -->
+                    <section id="blog-details" class="blog-details section">
+                        <div class="container">
+
+                            <article class="article">
+
+                                <div class="post-img text-center">
+                                    <img src="admin/blog/<?= $rowBlogsDetail['images'] ?>" alt="" class="img-fluid">
                                 </div>
-                                <div class="blog-icon-2">
-                                    <a href="" class="btn me-1"><i class="fab fa-facebook-f text-white"></i></a>
-                                    <a href="" class="btn me-1"><i class="fab fa-twitter text-white"></i></a>
-                                    <a href="" class="btn me-1"><i class="fab fa-instagram text-white"></i></a>
-                                </div>
-                            </div>
+
+                                <h2 class="title"><?= $rowBlogsDetail['title'] ?></h2>
+
+                                <div class="meta-top">
+                                    <ul>
+                                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#"><?= $rowBlogsDetail['penulis'] ?></a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><?= $date_blog ?></time></a></li>
+                                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-details.html">12 Comments</a></li>
+                                    </ul>
+                                </div><!-- End meta top -->
+
+                                <div class="content"><?= $rowBlogsDetail['content'] ?></div><!-- End post content -->
+
+                                <div class="meta-bottom">
+                                    <i class="bi bi-folder"></i>
+                                    <ul class="cats">
+                                        <li><a href="#"><?= $rowBlogsDetail['name'] ?></a></li>
+                                    </ul>
+
+                                    <i class="bi bi-tags"></i>
+                                    <ul class="tags">
+                                        <?php foreach ($tags as $tag): ?>
+                                            <li><a href="#"><?= $tag['value'] ?></a></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div><!-- End meta bottom -->
+
+                            </article>
+
                         </div>
-                        <div class="blog-content text-center position-relative px-3" style="margin-top: -25px;">
-                            <img src="asset/img/admin.jpg" class="img-fluid rounded-circle border border-4 border-white mb-3" alt="">
-                            <h5 class=""><?= $rowBlogs['penulis'] ?></h5>
-                            <?php
-                            $date_blog = $rowBlogs['created_at'];
-                            $date_blog = date("M d Y", strtotime($date_blog));
-                            ?>
-                            <span class="text-secondary"><?= $date_blog ?></span>
-                            <p class="py-2"><?= $rowBlogs['content'] ?></p>
-                        </div>
-                        <div class="blog-coment d-flex justify-content-between px-4 py-2 border bg-primary rounded-bottom">
-                            <a href="" class="text-white"><small><i class="fas fa-share me-2 text-secondary"></i>5324 Share</small></a>
-                            <a href="" class="text-white"><small><i class="fa fa-comments me-2 text-secondary"></i>5 Comments</small></a>
-                        </div>
-                    </div>
+                    </section><!-- /Blog Details Section -->
+
                 </div>
-            <?php endforeach; ?>
+
+                <div class="col-lg-4 sidebar">
+
+                    <div class="widgets-container">
+
+                        <!-- Blog Author Widget -->
+                        <!-- <div class="blog-author-widget widget-item">
+
+                            <div class="d-flex flex-column align-items-center">
+                                <img src="assets/img/blog/blog-author.jpg" class="rounded-circle flex-shrink-0" alt="">
+                                <h4>Jane Smith</h4>
+                                <div class="social-links">
+                                    <a href="https://x.com/#"><i class="bi bi-twitter-x"></i></a>
+                                    <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
+                                    <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
+                                    <a href="https://instagram.com/#"><i class="biu bi-linkedin"></i></a>
+                                </div>
+
+                                <p>
+                                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+                                </p>
+
+                            </div>
+                        </div> -->
+                        <!--/Blog Author Widget -->
+
+                        <!-- Search Widget -->
+                        <div class="search-widget widget-item">
+
+                            <h3 class="widget-title">Search</h3>
+                            <form action="">
+                                <input type="text">
+                                <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+                            </form>
+
+                        </div><!--/Search Widget -->
+
+                        <!-- Recent Posts Widget -->
+                        <div class="recent-posts-widget widget-item">
+
+                            <h3 class="widget-title">Recent Posts</h3>
+
+                            <div class="post-item">
+                                <h4><a href="blog-details.html">Nihil blanditiis at in nihil autem</a></h4>
+                                <time datetime="2020-01-01">Jan 1, 2020</time>
+                            </div><!-- End recent post item-->
+
+                            <div class="post-item">
+                                <h4><a href="blog-details.html">Quidem autem et impedit</a></h4>
+                                <time datetime="2020-01-01">Jan 1, 2020</time>
+                            </div><!-- End recent post item-->
+
+                            <div class="post-item">
+                                <h4><a href="blog-details.html">Id quia et et ut maxime similique occaecati ut</a></h4>
+                                <time datetime="2020-01-01">Jan 1, 2020</time>
+                            </div><!-- End recent post item-->
+
+                            <div class="post-item">
+                                <h4><a href="blog-details.html">Laborum corporis quo dara net para</a></h4>
+                                <time datetime="2020-01-01">Jan 1, 2020</time>
+                            </div><!-- End recent post item-->
+
+                            <div class="post-item">
+                                <h4><a href="blog-details.html">Et dolores corrupti quae illo quod dolor</a></h4>
+                                <time datetime="2020-01-01">Jan 1, 2020</time>
+                            </div><!-- End recent post item-->
+
+                        </div><!--/Recent Posts Widget -->
+
+                        <!-- Tags Widget -->
+                        <div class="tags-widget widget-item">
+
+                            <h3 class="widget-title">Tags</h3>
+                            <ul>
+                                <li><a href="#">App</a></li>
+                                <li><a href="#">IT</a></li>
+                                <li><a href="#">Business</a></li>
+                                <li><a href="#">Mac</a></li>
+                                <li><a href="#">Design</a></li>
+                                <li><a href="#">Office</a></li>
+                                <li><a href="#">Creative</a></li>
+                                <li><a href="#">Studio</a></li>
+                                <li><a href="#">Smart</a></li>
+                                <li><a href="#">Tips</a></li>
+                                <li><a href="#">Marketing</a></li>
+                            </ul>
+
+                        </div><!--/Tags Widget -->
+
+                    </div>
+
+                </div>
+
+            </div>
         </div>
+
     </div>
 </div>
 <!-- Blog End -->
